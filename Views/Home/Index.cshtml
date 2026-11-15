@@ -1,8 +1,37 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<BSIT_32E1_Elective_2_Assignment_1.Models.QuizQuestion>
+
+@{
+    ViewData["Title"] = "ASP.NET Core Web API & MVC Q&A";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="mb-4">
+    <h2 class="fw-bold">ASP.NET Core MVC & Web API Review</h2>
+    <p class="text-muted">Repository: <code>BSIT_32E1_Elective_2_Assignment_1</code></p>
 </div>
+
+@foreach (var item in Model)
+{
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white fw-semibold">
+            Question @item.Number: @item.QuestionText
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush mb-3">
+                @foreach (var option in item.Options)
+                {
+                    bool isCorrect = option.Key == item.CorrectOptionKey;
+                    <li class="list-group-item @(isCorrect ? "list-group-item-success fw-bold" : "")">
+                        <span>@option.Key) @option.Value</span>
+                        @if (isCorrect)
+                        {
+                            <span class="badge bg-success float-end">Correct Answer</span>
+                        }
+                    </li>
+                }
+            </ul>
+            <div class="alert alert-secondary mb-0 py-2">
+                <strong>Explanation:</strong> @item.Explanation
+            </div>
+        </div>
+    </div>
+}
